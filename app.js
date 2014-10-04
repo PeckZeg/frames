@@ -1,4 +1,6 @@
 var debug = require('debug')('frames');
+var config = require('./config');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -11,18 +13,18 @@ var users = require('./routes/users');
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.port);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, config.views.dir));
+app.set('view engine', config.views.engine);
 
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, config.public)));
 
 app.use('/', routes);
 app.use('/users', users);
